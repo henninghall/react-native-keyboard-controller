@@ -1,6 +1,6 @@
 import { useHeaderHeight } from "@react-navigation/elements";
 import React from "react";
-import { FlatList, TextInput } from "react-native";
+import { FlatList, TextInput, Keyboard } from "react-native";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 
 import Message from "../../../components/Message";
@@ -29,9 +29,13 @@ function ReanimatedChatFlatList() {
       <FlatList
         inverted
         contentContainerStyle={styles.contentContainer}
-        data={reversedMessages}
+        data={[
+          ...reversedMessages,
+          ...reversedMessages.map((m) => ({ ...m, text: m.text + "1" })),
+        ]}
         initialNumToRender={15}
         renderItem={RenderItem}
+        onMomentumScrollBegin={Keyboard.dismiss}
       />
       <TextInput style={styles.textInput} />
     </KeyboardAvoidingView>
